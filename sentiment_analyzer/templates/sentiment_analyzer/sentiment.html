@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg img-overlay">
+    <div class="image-overlay">
+        <div class="container center">
+            <form action="{% url 'amazon' %}" method="post">
+                {% csrf_token %}
+                <div class="row justify-content-md-center">
+                    <div class="form-group col-lg-7">
+                        <label for="prodtext">ProdName</label>
+                        <input style="background:#C7CFA8" type="text" class="form-control" id="prodtext" name="prodname" placeholder="Enter product name" required>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <button id="checkbtn" type="submit" class="btn btn-success">Check Sentiment</button>
+                </div>
+            </form>
+        <br>
+    <small style="display:block; color:white; text-align:center">Currently we support Amazon & Flipkart only. :) <br>Ex: Samsung Galaxy Z </small>
+
+    </div>
+    </div>
+</div>
+{% endblock %}
