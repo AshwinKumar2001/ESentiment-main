@@ -148,14 +148,16 @@ def amazon_review(request):
             
         except:
             product_image = driver_new.find_element_by_css_selector('.a-dynamic-image.a-stretch-vertical').get_attribute('src')
-        total_rating = driver_new.find_element_by_css_selector('.a-size-medium.a-color-base').get_attribute('innerHTML').split(' ')[0]
+        #total_rating = driver_new.find_element_by_css_selector('.a-size-medium.a-color-base').get_attribute('innerHTML').split(' ')[0]
+        total_rating = driver_new.find_element_by_xpath("//span[@class ='a-size-medium a-color-base']").get_attribute('innerHTML').split(' ')[0]
 
         reviews_link = driver_new.find_element_by_css_selector('.a-link-emphasis.a-text-bold').get_attribute('href')
         driver_new.get(reviews_link)
         # comment extraction goes here --->>>>
         rev_titles = driver_new.find_elements_by_css_selector('.a-size-base.a-link-normal.review-title.a-color-base.review-title-content.a-text-bold')
         rev_authors =  driver_new.find_elements_by_css_selector('.a-profile-name')
-        rev_ratings = driver_new.find_elements_by_css_selector('.a-icon-alt')
+        #rev_ratings = driver_new.find_elements_by_css_selector('.a-icon-alt')
+        rev_ratings = driver_new.find_elements_by_xpath("//div[@class ='a-section celwidget']")
         rev_texts = driver_new.find_elements_by_css_selector('.a-size-base.review-text.review-text-content > span')
         rev_dates = driver_new.find_elements_by_css_selector('.a-size-base.a-color-secondary.review-date')
         analyser = SentimentIntensityAnalyzer()
@@ -163,7 +165,8 @@ def amazon_review(request):
         for i,title in enumerate(rev_titles):
             title = ((rev_titles[i].get_attribute("text")).replace('\n','')).strip(' ')
             author = rev_authors[i].get_attribute('innerHTML')
-            rating = rev_ratings[i].get_attribute('innerHTML')
+            #rating = rev_ratings[i].get_attribute('innerHTML')
+            rating = rev_ratings[i].find_element_by_css_selector('.a-link-normal').get_attribute('title')
             review_text = ((rev_texts[i].get_attribute('innerHTML')).replace('\n','')).strip(' ')
             date = rev_dates[i].get_attribute('innerHTML')
 
@@ -226,14 +229,16 @@ def amazon_review(request):
 
             rev_titles = driver_new.find_elements_by_css_selector('.a-size-base.a-link-normal.review-title.a-color-base.review-title-content.a-text-bold')
             rev_authors =  driver_new.find_elements_by_css_selector('.a-profile-name')
-            rev_ratings = driver_new.find_elements_by_css_selector('.a-icon-alt')
+            #rev_ratings = driver_new.find_elements_by_css_selector('.a-icon-alt')
+            rev_ratings = driver_new.find_elements_by_xpath("//div[@class ='a-section celwidget']")
             rev_texts = driver_new.find_elements_by_css_selector('.a-size-base.review-text.review-text-content > span')
             rev_dates = driver_new.find_elements_by_css_selector('.a-size-base.a-color-secondary.review-date')
 
             for i,title in enumerate(rev_titles):
                 title = ((rev_titles[i].get_attribute("text")).replace('\n','')).strip(' ')
                 author = rev_authors[i].get_attribute('innerHTML')
-                rating = rev_ratings[i].get_attribute('innerHTML')
+                #rating = rev_ratings[i].get_attribute('innerHTML')
+                rating = rev_ratings[i].find_element_by_css_selector('.a-link-normal').get_attribute('title')
                 review_text = ((rev_texts[i].get_attribute('innerHTML')).replace('\n','')).strip(' ')
                 date = rev_dates[i].get_attribute('innerHTML')
 
