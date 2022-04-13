@@ -216,9 +216,11 @@ def amazon_review(request):
                                              review_text=review_text, sentiment_cat=sentiment_cat, g_rating=g_rating)'''
             amazon_review_dict.append(amazon_review_obj)
             #review_dict.append(flikart_review_obj)
-
+        count_pages = 0
         try:
-            next_page = 'https://www.amazon.in' + soup.find('li', class_='a-last').a['href']
+            #next_page = 'https://www.amazon.in' + soup.find('li', class_='a-last').a['href']
+            next_page = driver_new.find_element(By.CSS_SELECTOR, ".a-last > a").get_attribute('href')
+            count_pages += 1
         except:
             next_page = None
 
@@ -286,11 +288,18 @@ def amazon_review(request):
                 amazon_review_obj = AmazonReview(author=author, rating=rating[:3], date=date, title=title,
                                                  review_text=review_text, sentiment_cat=sentiment_cat, g_rating=g_rating)
                 amazon_review_dict.append(amazon_review_obj)
+                        
+            if(count_pages==2):
+                break
 
             try:
-                next_page = 'https://www.amazon.in' + soup.find('li', class_='a-last').a['href']
+                #next_page = 'https://www.amazon.in' + soup.find('li', class_='a-last').a['href']
+                next_page = driver_new.find_element(By.CSS_SELECTOR, ".a-last > a").get_attribute('href')
+                count_pages += 1
+
             except:
                 next_page = None
+
 
         driver_new.quit()
         if(positive + negative + neutral) == 0:
