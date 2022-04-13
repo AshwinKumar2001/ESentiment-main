@@ -227,7 +227,6 @@ def amazon_review(request):
         while (next_page != None):
             # comment extraction goes here --->>>>
             driver_new.get(next_page)
-            soup = BeautifulSoup(driver_new.page_source, 'lxml')
 
             rev_titles = driver_new.find_elements_by_css_selector('.a-size-base.a-link-normal.review-title.a-color-base.review-title-content.a-text-bold')
             rev_authors =  driver_new.find_elements_by_css_selector('.a-profile-name')
