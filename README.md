@@ -1,2 +1,2 @@
 # ESentiment
-Web Application for Product Review Sentiment Analysis.
+A Python Web Application using Django framework for Product Review Sentiment Analysis.
